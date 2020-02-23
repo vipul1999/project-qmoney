@@ -108,12 +108,23 @@ public class PortfolioManagerApplication {
     String toStringOfObjectMapper = "com.fasterxml.jackson.databind.ObjectMapper@66ac5762";
     String functionNameFromTestFileInStackTrace = "PortfolioManagerApplication.main()";
     String lineNumberFromTestFileInStackTrace = "126";
+    
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      PortfolioTrade[] obj = mapper.readValue(new File(
+        "/home/crio-user/workspace/vipul07-mathuria-ME_QMONEY/qmoney/bin/main/trades.json"), 
+          PortfolioTrade[].class); 
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    
     return Arrays.asList(new String[]{valueOfArgument0, resultOfResolveFilePathArgs0,
         toStringOfObjectMapper, functionNameFromTestFileInStackTrace,
         lineNumberFromTestFileInStackTrace});
   }
-
-
+  
+  
 
 
   public static void main(String[] args) throws Exception {
