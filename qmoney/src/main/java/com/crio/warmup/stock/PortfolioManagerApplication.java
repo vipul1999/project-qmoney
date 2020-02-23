@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,9 +44,24 @@ public class PortfolioManagerApplication {
   //  There can be few unused imports, you will need to fix them to make the build pass.
 
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
-
-
-    return Collections.emptyList();
+   
+    try { 
+    ObjectMapper mapper = new ObjectMapper();
+    PortfolioTrade[] obj = mapper.readValue(resolveFileFromResources(args[0]) , PortfolioTrade[].class);
+    List<String> mylist = new ArrayList<String>();
+    int number= obj.length;
+    int i=0; 
+    while(i<number)
+    {
+      mylist.add(obj[i].getSymbol());
+      i++;
+    }
+    return mylist; 
+    } catch (IOException e) {
+    e.printStackTrace();
+    }
+    return null;
+    
   }
 
 
@@ -108,15 +124,7 @@ public class PortfolioManagerApplication {
     String toStringOfObjectMapper = "com.fasterxml.jackson.databind.ObjectMapper@66ac5762";
     String functionNameFromTestFileInStackTrace = "PortfolioManagerApplication.main()";
     String lineNumberFromTestFileInStackTrace = "126";
-    
-    ObjectMapper mapper = new ObjectMapper();
-    try {
-      PortfolioTrade[] obj = mapper.readValue(new File(
-        "/home/crio-user/workspace/vipul07-mathuria-ME_QMONEY/qmoney/bin/main/trades.json"), 
-          PortfolioTrade[].class); 
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  
 
     
     return Arrays.asList(new String[]{valueOfArgument0, resultOfResolveFilePathArgs0,
