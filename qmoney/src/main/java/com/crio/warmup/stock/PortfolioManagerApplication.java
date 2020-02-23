@@ -1,7 +1,6 @@
 
 package com.crio.warmup.stock;
 
-
 import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.PortfolioTrade;
 import com.crio.warmup.stock.log.UncaughtExceptionHandler;
@@ -45,7 +44,8 @@ public class PortfolioManagerApplication {
 
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
 
-     return Collections.emptyList();
+
+    return Collections.emptyList();
   }
 
 
@@ -62,7 +62,6 @@ public class PortfolioManagerApplication {
   }
 
   private static File resolveFileFromResources(String filename) throws URISyntaxException {
-
     return Paths.get(
         Thread.currentThread().getContextClassLoader().getResource(filename).toURI()).toFile();
   }
@@ -103,14 +102,12 @@ public class PortfolioManagerApplication {
   //  ./gradlew test --tests PortfolioManagerApplicationTest.testDebugValues
 
   public static List<String> debugOutputs() {
-
-     String valueOfArgument0 = "trades.json";
-     String resultOfResolveFilePathArgs0 = "/home/crio-user/workspace/vipul07-mathuria-ME_QMONEY/qmoney/bin/main/trades.json";
-     String toStringOfObjectMapper = "com.fasterxml.jackson.databind.ObjectMapper@66ac5762";
-     String functionNameFromTestFileInStackTrace = "PortfolioManagerApplication.main()";
-     String lineNumberFromTestFileInStackTrace = "126";
-
-
+    String valueOfArgument0 = "trades.json";
+    String resultOfResolveFilePathArgs0 = 
+        "/home/crio-user/workspace/vipul07-mathuria-ME_QMONEY/qmoney/bin/main/trades.json";
+    String toStringOfObjectMapper = "com.fasterxml.jackson.databind.ObjectMapper@66ac5762";
+    String functionNameFromTestFileInStackTrace = "PortfolioManagerApplication.main()";
+    String lineNumberFromTestFileInStackTrace = "126";
     return Arrays.asList(new String[]{valueOfArgument0, resultOfResolveFilePathArgs0,
         toStringOfObjectMapper, functionNameFromTestFileInStackTrace,
         lineNumberFromTestFileInStackTrace});
@@ -122,7 +119,6 @@ public class PortfolioManagerApplication {
   public static void main(String[] args) throws Exception {
     Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     ThreadContext.put("runId", UUID.randomUUID().toString());
-
     printJsonObject(mainReadFile(args));
 
 
