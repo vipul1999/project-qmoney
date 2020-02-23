@@ -46,19 +46,19 @@ public class PortfolioManagerApplication {
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
    
     try { 
-    ObjectMapper mapper = new ObjectMapper();
-    PortfolioTrade[] obj = mapper.readValue(resolveFileFromResources(args[0]) , PortfolioTrade[].class);
-    List<String> mylist = new ArrayList<String>();
-    int number= obj.length;
-    int i=0; 
-    while(i<number)
-    {
-      mylist.add(obj[i].getSymbol());
-      i++;
-    }
-    return mylist; 
+      ObjectMapper mapper = new ObjectMapper();
+      PortfolioTrade[] obj = mapper.readValue(
+        resolveFileFromResources(args[0]), PortfolioTrade[].class);
+      List<String> mylist = new ArrayList<String>();
+      int number = obj.length;
+      int i = 0; 
+      while (i < number) {
+        mylist.add(obj[i].getSymbol());
+        i++;
+      }
+      return mylist; 
     } catch (IOException e) {
-    e.printStackTrace();
+      e.printStackTrace();
     }
     return null;
     
