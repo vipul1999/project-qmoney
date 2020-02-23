@@ -46,7 +46,7 @@ public class PortfolioManagerApplication {
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
    
     try { 
-      ObjectMapper mapper =getObjectMapper();
+      ObjectMapper mapper = getObjectMapper();
       PortfolioTrade[] obj = mapper.readValue(
         resolveFileFromResources(args[0]), PortfolioTrade[].class);
       List<String> mylist = new ArrayList<String>();
