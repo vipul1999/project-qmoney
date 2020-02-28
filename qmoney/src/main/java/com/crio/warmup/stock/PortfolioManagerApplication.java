@@ -8,7 +8,6 @@ import com.crio.warmup.stock.dto.TiingoCandle;
 import com.crio.warmup.stock.dto.TotalReturnsDto;
 import com.crio.warmup.stock.log.UncaughtExceptionHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -41,7 +40,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class PortfolioManagerApplication {
   private static List collection1;
-
+  
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
     
     try { 
@@ -89,61 +88,31 @@ public class PortfolioManagerApplication {
   //   ./gradlew run --args="trades.json 2019-07-01"
   //   ./gradlew run --args="trades.json 2019-12-03"
   //  And make sure that its printing correct results.
-  public static void fillHash(Map<Double, String> hmap, Double stockPrice, String stockName) {
-    hmap.put(stockPrice, stockName);
-  }
-
-  public static List<Double> getArray(JsonNode node, String endDate, 
-      Map<Double, String> hmap) throws IOException, URISyntaxException {
-    ObjectMapper mapper = getObjectMapper();
-    List<Double> priceInDouble = new ArrayList<Double>();
-    for (int i = 0; i < node.size(); i++) {
-      String stockName = node.get(i).get("symbol").asText().toLowerCase();
-      String startDate = node.get(i).get("purchaseDate").asText();
-      String result = getApiResult(stockName, endDate, startDate);
-      JsonNode node2 = mapper.readTree(result);
-      priceInDouble.add(i, node2.get(node2.size() - 1).get("close").asDouble());
-      fillHash(hmap, node2.get(node2.size() - 1).get("close").asDouble(), stockName.toUpperCase());
-    }
-    return priceInDouble;
-  }
-
-  public static String getApiResult(String stockName, String endDate, String startDate) 
-      throws IOException, URISyntaxException {
-    RestTemplate restTemplate = new RestTemplate();
-    final String uri = "https://api.tiingo.com/tiingo/daily/" + stockName + "/prices?startDate=" 
-        + startDate + "&endDate=" + endDate + "&token=65dc52f9de296af4b9735257386549ad4dd1fbaa";
-    String result = restTemplate.getForObject(uri, String.class);
-    return result;
-  }
-
-  public static List<Double> getStockPrice(File file, String endDate, Map<Double, String> hmap)
-      throws IOException, URISyntaxException {
-    ObjectMapper mapper = getObjectMapper();
-    JsonNode node = mapper.readTree(file);
-    List<Double> priceInDouble = getArray(node, endDate, hmap);
-    Collections.sort(priceInDouble);
-    return priceInDouble;
-  }
-
-  public static List<Double> getStockPriceUnsorted(File file, String endDate, 
-      Map<Double, String> hmap) throws IOException, URISyntaxException {
-    ObjectMapper mapper = getObjectMapper();
-    JsonNode node = mapper.readTree(file);
-    List<Double> priceInDouble = getArray(node, endDate, hmap);
-    //Collections.sort(priceInDouble);
-    return priceInDouble;
-  }
 
   public static List<String> mainReadQuotes(String[] args) throws IOException, URISyntaxException {
-    File file = resolveFileFromResources(args[0]);
-    List<String> stockPrice = new ArrayList<String>();
-    Map<Double, String> hmap = new HashMap<Double, String>();
-    List<Double> priceInDouble = getStockPrice(file, args[1], hmap);
-    for (int i = 0; i < priceInDouble.size(); i++) {
-      stockPrice.add(hmap.get(priceInDouble.get(i)));
+    ObjectMapper mapper = getObjectMapper();
+    PortfolioTrade[] obj = mapper.readValue(
+        resolveFileFromResources(args[0]), PortfolioTrade[].class);
+      
+    int i = 0; 
+    
+    RestTemplate restTemplate = new RestTemplate();
+    TreeMap<Double, String> map 
+            = new TreeMap<Double, String>();
+    while (i < obj.length) {
+      String url =  "https://api.tiingo.com/tiingo/daily/" + obj[i].getSymbol() + "/prices?startDate="
+          + obj[i].getPurchaseDate().toString() + "&endDate=" + args[1] 
+            + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";
+      String result = restTemplate.getForObject(url,String.class);     
+      List<TiingoCandle> collection = mapper.readValue(result,
+          new TypeReference<ArrayList<TiingoCandle>>(){});
+      map.put(collection.get(collection.size() - 1).getClose(),obj[i].getSymbol());
+      i++;
     }
-    return stockPrice;  
+
+    List<String> myList = new ArrayList<String>(map.values());
+    return myList;
+    
   
   }
 
@@ -181,7 +150,7 @@ public class PortfolioManagerApplication {
     ObjectMapper mapper = new ObjectMapper();
     logger.info(mapper.writeValueAsString(object));
   }
-  
+
   public static List<String> debugOutputs() {
     String valueOfArgument0 = "trades.json";
     String resultOfResolveFilePathArgs0 = 
