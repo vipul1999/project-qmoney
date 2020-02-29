@@ -155,8 +155,7 @@ public class PortfolioManagerApplication {
   //  ./gradlew test --tests PortfolioManagerApplicationTest.testCalculateAnnualizedReturn
 
   public static AnnualizedReturn calculateAnnualizedReturns(LocalDate endDate,
-      PortfolioTrade trade, Double buyPrice, Double sellPrice) 
-        {
+      PortfolioTrade trade, Double buyPrice, Double sellPrice) {
         
 
     double buyValue =  buyPrice;
@@ -181,7 +180,8 @@ public class PortfolioManagerApplication {
 
   }
 
-  public static List<String> mainReadQuotes(String[] args) throws JsonMappingException, JsonProcessingException, IOException, URISyntaxException {
+  public static List<String> mainReadQuotes(String[] args) 
+      throws JsonMappingException, JsonProcessingException, IOException, URISyntaxException {
     ObjectMapper mapper = getObjectMapper();
     PortfolioTrade[] obj = mapper.readValue(
         resolveFileFromResources(args[0]), PortfolioTrade[].class);
@@ -208,7 +208,7 @@ public class PortfolioManagerApplication {
   
   }
 
-  public static List<String> debugOutputs(){
+  public static List<String> debugOutputs() {
     String valueOfArgument0 = "trades.json";
     String resultOfResolveFilePathArgs0 = "trades.json";
     String toStringOfObjectMapper = getObjectMapper().toString();
