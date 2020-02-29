@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import static org.mockito.ArgumentMatchers.isNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -112,10 +110,7 @@ public class PortfolioManagerApplication {
          
 
       Double sellValue = collection.get(collection.size() - 1).getClose();
-      
-      if( sellValue.equals(null)){
-        collection.get(collection.size() - 1).getClose();
-      }
+   
 
   
       
