@@ -10,6 +10,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import static org.mockito.ArgumentMatchers.isNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -106,8 +109,15 @@ public class PortfolioManagerApplication {
           new TypeReference<ArrayList<TiingoCandle>>(){});
 
       double buyValue = collection.get(0).getOpen();
-          
-      double sellValue = collection.get(collection.size() - 1).getClose();
+         
+
+      Double sellValue = collection.get(collection.size() - 1).getClose();
+      
+      if( sellValue.equals(null)){
+        collection.get(collection.size() - 1).getClose();
+      }
+
+  
       
       double totalReturn = (sellValue - buyValue) / buyValue;
         
