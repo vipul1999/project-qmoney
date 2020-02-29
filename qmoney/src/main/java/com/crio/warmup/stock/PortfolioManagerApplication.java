@@ -14,16 +14,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -36,7 +31,7 @@ public class PortfolioManagerApplication {
 
 
 
-  
+
   public static List<String> mainReadFile(String[] args) throws IOException, URISyntaxException {
     
     try { 
@@ -193,14 +188,14 @@ public class PortfolioManagerApplication {
       
     int i = 0; 
     
-    RestTemplate restTemplate = new RestTemplate();
+    RestTemplate restTemplate1 = new RestTemplate();
     TreeMap<Double, String> map 
             = new TreeMap<Double, String>();
     while (i < obj.length) {
       String url =  "https://api.tiingo.com/tiingo/daily/" + obj[i].getSymbol() + "/prices?startDate="
           + obj[i].getPurchaseDate().toString() + "&endDate=" + args[1] 
             + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";
-      String result = restTemplate.getForObject(url,String.class);     
+      String result = restTemplate1.getForObject(url,String.class);     
       List<TiingoCandle> collection = mapper.readValue(result,
           new TypeReference<ArrayList<TiingoCandle>>(){});
       map.put(collection.get(collection.size() - 1).getClose(),obj[i].getSymbol());

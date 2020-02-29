@@ -4,12 +4,12 @@ package com.crio.warmup.stock.dto;
 public class AnnualizedReturn {
 
   private final String symbol;
-  private final Double annualizedReturn;
+  private final Double annualReturn;
   private final Double totalReturns;
 
   public AnnualizedReturn(String symbol, Double annualizedReturn, Double totalReturns) {
     this.symbol = symbol;
-    this.annualizedReturn = annualizedReturn;
+    this.annualReturn = annualizedReturn;
     this.totalReturns = totalReturns;
   }
 
@@ -18,7 +18,7 @@ public class AnnualizedReturn {
   }
 
   public Double getAnnualizedReturn() {
-    return annualizedReturn;
+    return annualReturn;
   }
 
   public Double getTotalReturns() {

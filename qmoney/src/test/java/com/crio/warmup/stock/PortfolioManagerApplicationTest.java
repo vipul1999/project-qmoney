@@ -3,9 +3,6 @@ package com.crio.warmup.stock;
 
 import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.PortfolioTrade;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +61,7 @@ class PortfolioManagerApplicationTest {
   }
 
   @Test
-  public void testCalculateAnnualizedReturn() throws JsonMappingException, JsonProcessingException {
+  public void testCalculateAnnualizedReturn() {
     PortfolioTrade trade = new PortfolioTrade("AAPL", 50, LocalDate.parse("2015-01-01"));
     AnnualizedReturn returns = PortfolioManagerApplication
         .calculateAnnualizedReturns(LocalDate.parse("2018-01-01"),
@@ -73,8 +70,7 @@ class PortfolioManagerApplicationTest {
   }
 
   @Test
-  public void testCalculateAnnualizedReturnGoogl() 
-      throws JsonMappingException, JsonProcessingException {
+  public void testCalculateAnnualizedReturnGoogl() {
     PortfolioTrade trade = new PortfolioTrade("GOOGL", 50, LocalDate.parse("2019-01-02"));
     AnnualizedReturn returns = PortfolioManagerApplication
         .calculateAnnualizedReturns(LocalDate.parse("2019-12-12"),
