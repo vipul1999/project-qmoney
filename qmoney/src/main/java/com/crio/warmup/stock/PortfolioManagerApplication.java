@@ -85,7 +85,7 @@ public class PortfolioManagerApplication {
   //  where trades.json is your json file
 
   public static List<AnnualizedReturn> mainCalculateSingleReturn(String[] args)
-      throws IOException, URISyntaxException {
+      throws JsonMappingException, JsonProcessingException, IOException, URISyntaxException {
     ObjectMapper mapper = getObjectMapper();
     PortfolioTrade[] obj = mapper.readValue(
       resolveFileFromResources(args[0]), PortfolioTrade[].class);
@@ -156,7 +156,7 @@ public class PortfolioManagerApplication {
 
   public static AnnualizedReturn calculateAnnualizedReturns(LocalDate endDate,
       PortfolioTrade trade, Double buyPrice, Double sellPrice) 
-          throws JsonMappingException, JsonProcessingException {
+        {
         
 
     double buyValue =  buyPrice;
@@ -181,7 +181,7 @@ public class PortfolioManagerApplication {
 
   }
 
-  public static List<String> mainReadQuotes(String[] args) throws IOException, URISyntaxException {
+  public static List<String> mainReadQuotes(String[] args) throws JsonMappingException, JsonProcessingException, IOException, URISyntaxException {
     ObjectMapper mapper = getObjectMapper();
     PortfolioTrade[] obj = mapper.readValue(
         resolveFileFromResources(args[0]), PortfolioTrade[].class);
@@ -208,7 +208,7 @@ public class PortfolioManagerApplication {
   
   }
 
-  public static List<String> debugOutputs() {
+  public static List<String> debugOutputs(){
     String valueOfArgument0 = "trades.json";
     String resultOfResolveFilePathArgs0 = "trades.json";
     String toStringOfObjectMapper = getObjectMapper().toString();
