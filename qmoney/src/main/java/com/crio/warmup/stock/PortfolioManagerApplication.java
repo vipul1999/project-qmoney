@@ -95,20 +95,17 @@ public class PortfolioManagerApplication {
     
     RestTemplate restTemplate = new RestTemplate();
      
-    List returnable = new ArrayList<AnnualizedReturn>();
+    List<AnnualizedReturn> returnable = new ArrayList<AnnualizedReturn>();
 
     while (i < obj.length) {
       String url =  "https://api.tiingo.com/tiingo/daily/" + obj[i].getSymbol() + "/prices?startDate="
           + obj[i].getPurchaseDate().toString() + "&endDate=" + args[1] 
-            + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";
-            
+            + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";            
       String result = restTemplate.getForObject(url,String.class);     
       List<TiingoCandle> collection = mapper.readValue(result,
           new TypeReference<ArrayList<TiingoCandle>>(){});
 
       double buyValue = collection.get(0).getOpen();
-         
-
       Double sellValue = collection.get(collection.size() - 1).getClose();
       // try {
       //   if (sellValue.equals(5)) {
@@ -116,35 +113,25 @@ public class PortfolioManagerApplication {
       //   }
       // } catch (NullPointerException exception) {
       //   collection.get(collection.size() - 1).getClose();
-
       // }
-
-  
-      
-      double totalReturn = (sellValue - buyValue) / buyValue;
-        
+      double totalReturn = (sellValue - buyValue) / buyValue;     
       LocalDate endDate = LocalDate.parse(args[1]);
       LocalDate startDate = obj[i].getPurchaseDate();
-
       Period diff = Period.between(startDate, endDate);
       int totalNumYears = diff.getYears();
       int totalNumMonths = diff.getMonths();
       int totalNumDays = diff.getDays();
       float years = (float)totalNumYears 
-          + ((float)totalNumMonths) / 12 + ((float)totalNumDays) / 365;
-          
-      double annualizedReturn = Math.pow(1 + totalReturn,1 / years) - 1;
-      // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
-      // float years = (float)totaldays / 365;
-
-      // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
-      // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));  
+          + ((float)totalNumMonths) / 12 + ((float)totalNumDays) / 365;          
+      double annualizedReturn = Math.pow(1 + totalReturn,1 / years) - 1;  
       returnable.add(new AnnualizedReturn(obj[i].getSymbol(), annualizedReturn, totalReturn));
       i++;
     }
-
-   
     return returnable;
+    // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
+      // float years = (float)totaldays / 365;
+      // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
+      // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
 
 
       
