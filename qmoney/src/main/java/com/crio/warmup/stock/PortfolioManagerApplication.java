@@ -110,7 +110,14 @@ public class PortfolioManagerApplication {
          
 
       Double sellValue = collection.get(collection.size() - 1).getClose();
-   
+      // try {
+      //   if (sellValue.equals(5)) {
+      //     //nothing
+      //   }
+      // } catch (NullPointerException exception) {
+      //   collection.get(collection.size() - 1).getClose();
+
+      // }
 
   
       
@@ -127,8 +134,11 @@ public class PortfolioManagerApplication {
           + ((float)totalNumMonths) / 12 + ((float)totalNumDays) / 365;
           
       double annualizedReturn = Math.pow(1 + totalReturn,1 / years) - 1;
-        
-        
+      // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
+      // float years = (float)totaldays / 365;
+
+      // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
+      // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));  
       returnable.add(new AnnualizedReturn(obj[i].getSymbol(), annualizedReturn, totalReturn));
       i++;
     }
@@ -175,10 +185,16 @@ public class PortfolioManagerApplication {
     int totalNumYears = diff.getYears();
     int totalNumMonths = diff.getMonths();
     int totalNumDays = diff.getDays();
-    double years = (double)totalNumYears 
-        + ((double)totalNumMonths) / 12 + ((double)totalNumDays) / 365;
-            
+    float years = (float)totalNumYears 
+          + ((float)totalNumMonths) / 12 + ((float)totalNumDays) / 365;
+          
     double annualizedReturn = Math.pow(1 + totalReturn,1 / years) - 1;
+    // double years = (double)totalNumYears 
+    //     + ((double)totalNumMonths) / 12 + ((double)totalNumDays) / 365;
+    // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
+    // float years = (float)totaldays / 365;
+
+    // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;
           
     return new AnnualizedReturn(trade.getSymbol(), annualizedReturn, totalReturn);
           
