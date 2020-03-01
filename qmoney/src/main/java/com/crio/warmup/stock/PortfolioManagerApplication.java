@@ -129,9 +129,9 @@ public class PortfolioManagerApplication {
     }
     return returnable;
     // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
-      // float years = (float)totaldays / 365;
-      // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
-      // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
+    // float years = (float)totaldays / 365;
+    // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
+    // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
 
 
       
