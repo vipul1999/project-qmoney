@@ -96,6 +96,10 @@ public class PortfolioManagerApplication {
     RestTemplate restTemplate = new RestTemplate();
      
     List<AnnualizedReturn> returnable = new ArrayList<AnnualizedReturn>();
+    LocalDate endDate = LocalDate.now();
+    if (!args[1].isEmpty()) {
+      endDate = LocalDate.parse(args[1]);
+    }
 
     while (i < obj.length) {
       String url =  "https://api.tiingo.com/tiingo/daily/" + obj[i].getSymbol() + "/prices?startDate="
@@ -113,7 +117,7 @@ public class PortfolioManagerApplication {
       // } catch (NullPointerException exception) {
       //   collection.get(collection.size() - 1).getClose();
       // }
-      LocalDate endDate = LocalDate.parse(args[1]);
+      
       returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
       i++;
     }
