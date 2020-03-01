@@ -103,7 +103,7 @@ public class PortfolioManagerApplication {
 
     while (i < obj.length) {
       String url =  "https://api.tiingo.com/tiingo/daily/" + obj[i].getSymbol() + "/prices?startDate="
-          + obj[i].getPurchaseDate().toString() + "&endDate=" + args[1] 
+          + obj[i].getPurchaseDate().toString() + "&endDate=" + endDate.toString() 
             + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";            
       String result = restTemplate.getForObject(url,String.class);     
       List<TiingoCandle> collection = mapper.readValue(result,
