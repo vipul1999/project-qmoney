@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -26,6 +28,7 @@ import java.util.logging.Logger;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.web.client.RestTemplate;
+
 
 
 public class PortfolioManagerApplication {
@@ -110,34 +113,19 @@ public class PortfolioManagerApplication {
           new TypeReference<ArrayList<TiingoCandle>>(){});
       double buyValue = collection.get(0).getOpen();
       Double sellValue = collection.get(collection.size() - 1).getClose();
-      // try {
-      //   if (sellValue.equals(5)) {
-      //     //nothing
-      //   }
-      // } catch (NullPointerException exception) {
-      //   collection.get(collection.size() - 1).getClose();
-      // }
-      
       returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
       i++;
     }
-    return returnable;
-    // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
-    // float years = (float)totaldays / 365;
-    // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
-    // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
-
-
-      
-
-     
-     
-     
-     
-     
-     
-   
+    Collections.sort(returnable, Comparator.comparingDouble(AnnualizedReturn::getAnnualizedReturn)
+          .reversed());
+    return returnable; 
   }
+ 
+  
+  // int totaldays = totalNumDays + totalNumMonths * 31 + totalNumYears * 365;
+  // float years = (float)totaldays / 365;
+  // double annualizedReturn = Math.pow(1 + totalReturn,1 / (double)years) - 1;  
+  // returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
 
   // TODO: CRIO_TASK_MODULE_CALCULATIONS
   //  annualized returns should be calculated in two steps -
@@ -259,4 +247,6 @@ public class PortfolioManagerApplication {
   }
 
 }
+
+ 
 
