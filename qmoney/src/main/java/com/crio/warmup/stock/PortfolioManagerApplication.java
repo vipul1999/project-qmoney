@@ -104,7 +104,6 @@ public class PortfolioManagerApplication {
       String result = restTemplate.getForObject(url,String.class);     
       List<TiingoCandle> collection = mapper.readValue(result,
           new TypeReference<ArrayList<TiingoCandle>>(){});
-
       double buyValue = collection.get(0).getOpen();
       Double sellValue = collection.get(collection.size() - 1).getClose();
       // try {
@@ -114,17 +113,8 @@ public class PortfolioManagerApplication {
       // } catch (NullPointerException exception) {
       //   collection.get(collection.size() - 1).getClose();
       // }
-      double totalReturn = (sellValue - buyValue) / buyValue;     
       LocalDate endDate = LocalDate.parse(args[1]);
-      LocalDate startDate = obj[i].getPurchaseDate();
-      Period diff = Period.between(startDate, endDate);
-      int totalNumYears = diff.getYears();
-      int totalNumMonths = diff.getMonths();
-      int totalNumDays = diff.getDays();
-      float years = (float)totalNumYears 
-          + ((float)totalNumMonths) / 12 + ((float)totalNumDays) / 365;          
-      double annualizedReturn = Math.pow(1 + totalReturn,1 / years) - 1;  
-      returnable.add(new AnnualizedReturn(obj[i].getSymbol(), annualizedReturn, totalReturn));
+      returnable.add(calculateAnnualizedReturns(endDate, obj[i], buyValue, sellValue));
       i++;
     }
     return returnable;
