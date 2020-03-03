@@ -37,7 +37,7 @@ public class PortfolioManagerImpl implements PortfolioManager {
     int n = portfolioTrades.size();
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
-
+  
     List<AnnualizedReturn> returnable = new ArrayList<AnnualizedReturn>();
     while (i < n) {
       PortfolioTrade obj = portfolioTrades.get(i);
@@ -145,6 +145,7 @@ public class PortfolioManagerImpl implements PortfolioManager {
     String uriTemplate = "https://api.tiingo.com/tiingo/daily/" + symbol.toLowerCase() + "/prices?"
         + "startDate=" + startDate.toString() + "&endDate=" + endDate.toString() 
           + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";
+   
     return uriTemplate;
         
   }
