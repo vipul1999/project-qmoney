@@ -6,7 +6,7 @@ package com.crio.warmup.stock.portfolio;
 import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.Candle;
 import com.crio.warmup.stock.dto.PortfolioTrade;
-import com.crio.warmup.stock.dto.TiingoCandle;
+// import com.crio.warmup.stock.dto.TiingoCandle;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -41,14 +41,6 @@ public class PortfolioManagerImpl implements PortfolioManager {
     List<AnnualizedReturn> returnable = new ArrayList<AnnualizedReturn>();
     while (i < n) {
       PortfolioTrade obj = portfolioTrades.get(i);
-      // String url = "https://api.tiingo.com/tiingo/daily/" +
-      // obj.getSymbol().toLowerCase() + "/prices?"
-      // + "startDate=" + obj.getPurchaseDate().toString() + "&endDate=" +
-      // endDate.toString()
-      // + "&token=9dfe04619d407e795dcb35f2046ed98d26e04563";
-      // String result = restTemplate.getForObject(url,String.class);
-      // List<TiingoCandle> collection = objectMapper.readValue(result,
-      // new TypeReference<ArrayList<TiingoCandle>>(){});
 
       List<Candle> collection = getStockQuote(obj.getSymbol(), obj.getPurchaseDate(), endDate);
       double buyValue = collection.get(0).getOpen();
@@ -135,7 +127,6 @@ public class PortfolioManagerImpl implements PortfolioManager {
       throws JsonProcessingException {
     
     ObjectMapper mapper = new ObjectMapper();
-    // mapper.registerModule(new JavaTimeModule());
   
     String url = buildUri(symbol, from, to);
 

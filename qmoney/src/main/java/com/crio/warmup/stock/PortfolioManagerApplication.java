@@ -15,8 +15,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
@@ -33,17 +31,6 @@ import org.springframework.web.client.RestTemplate;
 
 
 public class PortfolioManagerApplication {
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -84,19 +71,6 @@ public class PortfolioManagerApplication {
     objectMapper.registerModule(new JavaTimeModule());
     return objectMapper;
   }
-
-  // private static String readFileAsString(String file) throws URISyntaxException, IOException {
-  //   File file1 = resolveFileFromResources(file);
-  //   Path path = file1.toPath();
-  //   List<String> contents = Files.readAllLines(path);
-  //   String content = String.join("/n",contents);
-  //   return content;
-  // }
-
-
- 
-    
-  
 
 
   public static void main(String[] args) throws Exception {
